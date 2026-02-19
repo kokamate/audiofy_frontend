@@ -1,0 +1,146 @@
+:root {
+    --text-color: rgb(31, 215, 96);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-size: 3rem;
+    background-color: rgb(18, 18, 18);
+}
+
+.tarolo {
+    width: 31rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 3rem;
+}
+
+
+.focim {
+    text-transform: uppercase;
+    text-align: center;
+    font-weight: 500;
+    user-select: none;
+    color: white;
+}
+
+.focim_zold {
+    color: var(--text-color);
+}
+
+.input {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 16rem;
+    border: 1.2px solid gray;
+    border-radius: 5px;
+}
+
+input {
+    font-size: 0.8rem;
+    padding: 10px 0;
+    width: 90%;
+    border: none;
+    outline: none;
+    color: rgb(118, 118, 118);
+}
+
+input,
+textarea {
+
+    background-color: rgb(18, 18, 18);
+
+}
+
+.login {
+    background-color: var(--text-color);
+    width: 16rem;
+    border-radius: 999px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    cursor: pointer;
+    transition: ease 0.2s;
+    height: 2.5rem;
+}
+
+.login:hover {
+    transform: scale(1.01);
+}
+
+.login button {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #000000;
+    background-color: inherit;
+    border: none;
+    cursor: inherit;
+}
+
+.regEmail {
+    margin-top: 30px;
+    font-size: 0.7rem;
+    font-weight: bold;
+    width: 16rem;
+    text-align: left;
+    margin-left: 5px;
+    color: white;
+}
+
+.regEmail2 {
+    font-size: 0.7rem;
+    font-weight: bold;
+    width: 16rem;
+    text-align: left;
+    margin-left: 5px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    color: white;
+}
+
+@media screen and (max-width: 500px) {
+
+    .login,
+    .input {
+        width: 340px;
+    }
+
+    .regEmail {
+        width: 340px;
+        text-align: left;
+    }
+
+    .regEmail2 {
+        width: 340px;
+        text-align: left;
+    }
+}
+
+.formMessage {
+    margin-top: 15px;
+    font-size: 0.8rem;
+    text-align: center;
+}
+
+.success {
+    color: var(--text-color);
+}
+
+.error {
+    color: red;
+}
