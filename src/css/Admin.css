@@ -1,0 +1,160 @@
+:root {
+    --text-color: rgb(31, 215, 96);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, #1a1a1a);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    color: white;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+.logo {
+    font-size: 28px;
+    font-weight: bold;
+    color: #39ff14;
+    margin-top: 15px;
+  }
+
+.admin-title {
+    font-size: 28px;
+    color: #39ff14;
+    letter-spacing: 2px;
+}
+
+.top-buttons {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+}
+
+.green-btn {
+    text-align: center;
+    background: var(--text-color);
+    border: none;
+    padding: 12px 25px;
+    border-radius: 30px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.green-btn:hover {
+    background: #2ed10f;
+}
+
+.section {
+    font-size: 25px;
+    margin-top: 40px;
+}
+
+.section h2 {
+    margin-bottom: 15px;
+    text-align: center;
+    color: var(--text-color);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    overflow: hidden;
+    border-radius: 15px;
+}
+
+th,
+td {
+    padding: 15px;
+    text-align: center;
+}
+
+th {
+    background: var(--text-color);
+    color: black;
+}
+
+td {
+    background: #2a2a2a;
+    border-bottom: 1px solid #444;
+}
+
+.action-btn {
+    padding: 6px 14px;
+    border-radius: 20px;
+    border: none;
+    cursor: pointer;
+    font-size: 12px;
+    margin: 2px;
+}
+
+.edit {
+    background: var(--text-color);
+}
+
+.delete {
+    background: #ff3b3b;
+    color: white;
+}
+
+/* Responsive */
+
+@media(max-width:768px) {
+    .admin-container {
+        padding: 20px;
+    }
+
+    table,
+    thead,
+    tbody,
+    th,
+    td,
+    tr {
+        display: block;
+    }
+
+    thead {
+        display: none;
+    }
+
+    tr {
+        margin-bottom: 20px;
+        background: #2a2a2a;
+        border-radius: 15px;
+        padding: 15px;
+    }
+
+    td {
+        text-align: right;
+        padding-left: 50%;
+        position: relative;
+        border: none;
+    }
+
+    td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 15px;
+        width: 45%;
+        text-align: left;
+        font-weight: bold;
+        color: #39ff14;
+    }
+}
