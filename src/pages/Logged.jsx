@@ -1,9 +1,9 @@
 import { useNavigate } from "react-router-dom";
 import '../css/Logged.css'
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 export default function Logged() {
-
+  
+  const user = JSON.parse(localStorage.getItem("user"));
   const navigate = useNavigate()
 
   const handleSubmit = async (e) => {
@@ -83,7 +83,9 @@ export default function Logged() {
         </div>
         <form onSubmit={handleSubmit}>
           <button type="submit" className="logout">Kijelentkezés</button>
+      
         </form>
+        
       </div>
       <div className="main">
 
@@ -92,7 +94,7 @@ export default function Logged() {
         <h2>Felkapott dalok</h2>
         <div className="foresz">
 
-        <div className="card">
+          <div className="card">
             <div className="card-header">
               <div className="image-wrapper">
                 <img src="https://picsum.photos/300?1" alt="borítókép" />
