@@ -10,4 +10,12 @@ export default defineConfig({
       },
     }),
   ],
+  server: {
+    proxy: {
+      '/users': {
+        target: 'http://27.0.0.1:4562',
+        changeOirigin: true
+      }
+    }
+  }
 })

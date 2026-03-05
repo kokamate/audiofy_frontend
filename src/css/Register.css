@@ -16,6 +16,7 @@ body {
     height: 100vh;
     font-size: 3rem;
     background-color: rgb(18, 18, 18);
+    overflow: hidden;
 }
 
 .tarolo {
