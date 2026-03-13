@@ -1,40 +1,42 @@
-import { useNavigate } from "react-router-dom";
-import '../css/Home.css';
+import { useEffect, useState } from "react"
+import { NavBar } from "../components/NavBar"
+import { whoami, logout } from "../api"
+import { Navigate, useNavigate } from "react-router-dom"
+import kep from "/meme.png"
+
 
 export default function Home() {
+    const [user, setUser] = useState(null)
+    const [errorUser, setErrorUser] = useState('')
+    const navigate = useNavigate();
 
-  const navigate = useNavigate();
+    //console.log(errorUser)
+    //console.log(user);
 
-  return (
-      <div className="content">
-        <div className="home-wrapper">
+    useEffect(() => {
+        async function load() {
+            const data = await whoami()
+            console.log(data);
+            if (data.error) {
+                return setErrorUser(data.error)
+            }
+            return setUser(data)
+        }
+        load()
+    }, [])
 
-          <div className="header">
-            <div className="logo">OOOOudify</div>
-
-            <div className="header-buttons">
-              <button className="reg" onClick={() => navigate("/login")}>
-                Bejelentkezés
-              </button>
-              <button className="reg" onClick={() => navigate("/register")}>
-                Regisztráció
-              </button>
-            </div>
-          </div>
-
-          <div className="section">
-            {/* Fő tartalom */}
-          </div>
-
-          <div className="signup-banner">
-            <p>
-              <strong>Belehallgatás az OOOOudify-ba</strong><br />
-              Regisztrálj, és máris korlátlan hozzáférésed lesz.
-            </p>
-            <button onClick={() => navigate("/register")}>Ingyenes regisztráció</button>
-          </div>
-
+    async function onLogout() {
+        const data = await logout()
+        console.log(data);
+        if (data.error) {
+            return setErrorUser(data.error)
+        }
+        setUser(null)
+        navigate('/')
+    }
+    return (
+        <div>
+            <NavBar user={user} onLogout={onLogout} />
         </div>
-    </div>
-  );
+    )
 }
