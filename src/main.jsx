@@ -1,22 +1,21 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import Login from './pages/Login.jsx'
-import Home from './pages/Home.jsx'
-import Logged from './pages/Logged.jsx'
-import Register from './pages/Register.jsx'
-import Admin from './pages/Admin.jsx'
-import { BrowserRouter } from 'react-router-dom'
-import { Routes, Route, Navigate } from 'react-router-dom'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+
+import Home from './pages/Home'
+import Register from './pages/Register'
+import Login from './pages/Login'
+import Admin from './pages/Admin'
 
 createRoot(document.getElementById('root')).render(
-  <BrowserRouter>
-    <Routes>
-      <Route path='/' element={<Home />} />
-      <Route path='/login' element={<Login />} />
-      <Route path='/register' element={<Register />} />
-      <Route path='/home' element={<Home />} />
-      <Route path='/logged' element={<Logged />} />
-      <Route path='/admin' element={<Admin />} />
+  <StrictMode>
+    <BrowserRouter>
+      <Routes>
+      <Route path='/' element={<Home />}/>
+      <Route path='register' element={<Register />}/>
+      <Route path='login' element={<Login />}/>
+      <Route path='admin' element={<Admin />}/>
     </Routes>
-  </BrowserRouter>,
+    </BrowserRouter>
+  </StrictMode>,
 )

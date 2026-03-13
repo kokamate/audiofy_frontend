@@ -1,113 +1,151 @@
 :root {
-    --text-color: rgb(31, 215, 96);
+    --green: #1ed760;
+    --dark: #121212;
+    --card: #181818;
+    --card2: #222;
+    --danger: #ff4d4d;
 }
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: "Segoe UI", Arial, Helvetica, sans-serif;
 }
 
 body {
-    background: linear-gradient(135deg, #1a1a1a);
+    background: radial-gradient(circle at top, #1f1f1f, #0d0d0d);
     min-height: 100vh;
     display: flex;
-    align-items: baseline;
     justify-content: center;
     color: white;
-    margin-top: 80px;
-    overflow: scroll;
+    overflow: auto;
 }
 
-.header {
+/* MAIN CONTAINER */
+
+.admin-container {
+    width: 1200px;
+    max-width: 95%;
+    margin-top: 60px;
+    padding: 40px;
+    background: rgba(24, 24, 24, 0.8);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.6);
+
+}
+
+/* HEADER */
+
+.admin_header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 40px;
 }
 
-.logo {
-    font-size: 28px;
-    font-weight: bold;
-    color: #39ff14;
-    margin-top: 15px;
-  }
-
 .admin-title {
     font-size: 28px;
-    color: #39ff14;
-    letter-spacing: 2px;
+    letter-spacing: 3px;
+    color: white;
 }
 
-.top-buttons {
-    display: flex;
-    gap: 20px;
-    justify-content: center;
-    margin-bottom: 30px;
-    flex-wrap: wrap;
-}
+/* SECTIONS */
 
 .section {
-    font-size: 25px;
     margin-top: 40px;
+
 }
 
 .section h2 {
-    margin-bottom: 15px;
     text-align: center;
-    color: var(--text-color);
+    margin-bottom: 20px;
+    color: var(--green);
 }
+
+/* TABLE */
 
 table {
     width: 100%;
     border-collapse: collapse;
     overflow: hidden;
-    border-radius: 15px;
-}
+    border-radius: 12px;
 
-th,
-td {
-    padding: 15px;
-    text-align: center;
 }
 
 th {
-    background: var(--text-color);
+    background: var(--green);
     color: black;
+    padding: 14px;
+    font-size: 16px;
+
 }
 
 td {
-    background: #2a2a2a;
-    border-bottom: 1px solid #444;
+    padding: 14px;
+    background: var(--card);
+    border-bottom: 1px solid #333;
+    transition: 0.2s;
+    text-align: center;
+
+}
+
+tr:hover td {
+    background: var(--card2);
+}
+
+/* BUTTONS */
+
+button {
+    padding: 6px 14px;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
 }
 
 .delete {
-    background: #ff3b3b;
+    background: var(--danger);
     color: white;
-    padding: 5px;
-    font-weight: bold;
-    font-size: 18px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+}
+
+.delete:hover {
+    transform: scale(1.05);
+    background: #ff2e2e;
 }
 
 .modify {
-    background: green;
-    margin-left: 5px;
-    color: white;
-    padding: 5px;
-    font-weight: bold;
-    font-size: 18px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+    background: var(--green);
+    color: black;
+    margin-left: 6px;
 }
 
-/* Responsive */
+.modify:hover {
+    transform: scale(1.05);
+}
 
-@media(max-width:768px) {
+/* MESSAGE */
+
+.hiba {
+    text-align: center;
+    margin-top: 15px;
+    color: #ff4d4d;
+    font-weight: bold;
+}
+
+.uzenet {
+    text-align: center;
+    margin-top: 15px;
+    color: var(--green);
+    font-weight: bold;
+}
+
+/* MOBILE */
+
+@media(max-width: 768px) {
+
     .admin-container {
         padding: 20px;
     }
@@ -126,50 +164,169 @@ td {
     }
 
     tr {
-        margin-bottom: 20px;
-        background: #2a2a2a;
-        border-radius: 15px;
-        padding: 15px;
+        margin-bottom: 15px;
+        border-radius: 12px;
+        overflow: hidden;
     }
 
     td {
-        text-align: center;
+        text-align: right;
+        padding-left: 50%;
         position: relative;
-        border: none;
     }
 
     td::before {
-        content: attr(data-label);
         position: absolute;
         left: 15px;
-        width: 45%;
-        text-align: left;
+        content: attr(data-label);
         font-weight: bold;
-        color: #39ff14;
+        color: var(--green);
+        text-align: left;
     }
-
-    .header {
-        height: 150px;
-    }
-
-    body {
-        margin-top: 120px;
-    }
-
-  
 
 }
 
-.hiba {
-    text-align: center;
-    font-size: 20px;
-    margin-top: 10px;
-    color: red;
+/* Overlay */
+.admin_overlay,
+.edit-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
 }
 
-.uzenet {
-    text-align: center;
-    font-size: 20px;
-    margin-top: 10px;
-    color: green;
+/* Modal box */
+.admin_modal,
+.edit-modal {
+    background: #333;
+    border-radius: 12px;
+    padding: 25px 30px;
+    width: 350px;
+    max-width: 90%;
+    background: rgba(24, 24, 24, 0.8);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.6);
+}
+
+@keyframes fadeIn {
+    from {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Cím és szöveg */
+.admin_modal h2,
+.edit-modal h2 {
+    margin-top: 0;
+    color: white;
+    font-size: 1.3rem;
+    margin-bottom: 10px;
+}
+
+.admin_modal p,
+.edit-modal label {
+    margin: 10px 0;
+    color: #555;
+    font-size: 0.95rem;
+}
+
+/* Input */
+.edit-modal input,
+.edit-modal select {
+    width: 100%;
+    padding: 8px 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 0.95rem;
+}
+
+/* Gombok */
+.admin_buttons,
+.edit-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+button {
+    padding: 6px 14px;
+    border-radius: 6px;
+    border: none;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+/* Cancel */
+.admin_cancel,
+.cancel-btn {
+    background: #ddd;
+    color: #333;
+}
+
+.admin_cancel:hover,
+.cancel-btn:hover {
+    transform: scale(1.05);
+    background: #ccc;
+}
+
+/* Confirm / Save */
+.admin_confirm,
+.save-btn {
+    background: #28a745;
+    color: #fff;
+}
+
+.admin_confirm:hover,
+.save-btn:hover {
+    background: #8d0606;
+    transform: scale(1.05);
+}
+
+.admin_confirm {
+    margin-right: 15px;
+    background-color: red;
+}
+
+.edit-btn {
+    background-color: green;
+    color: white;
+}
+
+.edit-btn:hover {
+    background-color: rgb(1, 73, 1);
+}
+
+
+.edit-modal label {
+    color: white;
+    font-weight: bold;
+    padding: 5px;
+}
+
+.edit-modal input {
+    margin-top: 5px;
+    background-color: #181818;
+    color: white;
+}
+
+.edit-modal select {
+    margin-top: 5px;
+    background-color: #181818;
+    color: white;
 }

@@ -1,90 +1,81 @@
-import { useState } from "react";
-import '../css/Login.css'
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import FeketeGomb from '../components/FeketeGomb';
+import '../css/Login.css';
+import { login } from '../api';
 
 export default function Login() {
-
     const navigate = useNavigate();
+    const [email, setEmail] = useState('');
+    const [psw, setPsw] = useState('');
+    const [hiba, setHiba] = useState('');
+    const [uzenet, setUzenet] = useState('');
 
-    const [email, setEmail] = useState("");
-    const [psw, setPsw] = useState("");
-    const [message, setMessage] = useState("");
-    const [isError, setIsError] = useState(false);
+    async function onLog() {
+        setHiba('');
+        setUzenet('');
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+        if (!email || !psw) {
+            return setHiba('Kérlek töltsd ki az E-mailt és a jelszót!');
+        }
 
         try {
-            const response = await fetch('http://localhost:4562/user/login', {
-                method: 'POST',
-                headers: {
-                    'content-type': 'application/json'
-                },
-                body: JSON.stringify({ email, psw }),
-                credentials: 'include'
-            });
-
-            //console.log(response);
-            const data = await response.json();
-
-            if (response.ok) {
-                setIsError(false);
-                setMessage("Sikeres bejelentkezés!");
-
-                setTimeout(() => {
-                    navigate('/Logged');
-                }, 1000);
-
-            } else {
-                setIsError(true);
-                setMessage("E-mail cím vagy jelszó helytelen!");
+            const data = await login(email, psw);
+            if (data.error) {
+                return setHiba(data.error);
             }
-
-        } catch (error) {
-            console.log(error);
-            setIsError(true);
-            setMessage("Szerver hiba történt");
+            setUzenet(data.message);
+            setTimeout(() => navigate('/'), 600);
+        } catch (err) {
+            return setHiba("Hiba a csatlakozás során!");
         }
-    };
+    }
 
     return (
-        <>
-            <div className="tarolo">
-                <div className="focim">
-                    <span className="focim_zold">OOOO</span>udify
+        <div className="home-wrapper">
+            <div className="login_tarlo">
+                <div className="login_focim">
+                    OOOO<span className="focim_zold">dify</span>
                 </div>
 
-                <form onSubmit={handleSubmit}>
-                    <p className="regEmail">E-mail-cím</p>
-                    <div className="input">
-                        <input
-                            type="email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            placeholder="nev@domain.com" />
-                    </div>
+                <p className="logEmail">E-mail-cím</p>
+                <div className="input">
+                    <FeketeGomb
+                        szin="input-email"
+                        type="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        placeholder="email@domain.com"
+                    />
+                </div>
 
+                <p className="logPsw">Jelszó</p>
+                <div className="input">
+                    <FeketeGomb
+                        szin="input-psw"
+                        type="password"
+                        value={psw}
+                        onChange={(e) => setPsw(e.target.value)}
+                        placeholder="•••••••••"
+                    />
+                </div>
 
-                    <p className="regEmail2">Jelszó</p>
-                    <div className="input">
-                        <input
-                            type="password"
-                            value={psw}
-                            onChange={(e) => setPsw(e.target.value)}
-                            required
-                        />
-                    </div>
-                    <div className="reg">
-                        <button type="submit">Bejelentkezés</button>
-                    </div>
+                <div className="log">
+                    <FeketeGomb
+                        szin="btn btn-dark px-4"
+                        text="Bejelentkezés"
+                        onClick={onLog}
+                    />
+                </div>
 
-                    {message && (
-                        <p className={isError ? "formMessage error" : "formMessage success"}>
-                            {message}
-                        </p>
-                    )}
-                </form>
+                {hiba && <p className="error-message">{hiba}</p>}
+                {uzenet && <p className="success-message">{uzenet}</p>}
+
+                <div className="login_Container">
+                    <p className="login_Text">Még nincs fiókod?</p>
+                    <a href="/register" className="login_Link">Regisztráció</a>
+                </div>
             </div>
-        </>
-    )
+        </div>
+    );
 }

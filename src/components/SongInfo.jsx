@@ -3,10 +3,12 @@ export default function SongInfo({ id, uploaderID, name, songDelete, onModify })
         <tr>
             <td>{id}</td>
             <td>{uploaderID}</td>
-            <td>{name}</td>
             <td>
-                <button onClick={() => songDelete(id)} className="delete">Törlés</button>
-                <button onClick={onModify} className="modify">Szerkesztés</button>
+                <span className="song-name-badge">{name}</span>
+            </td>
+            <td>
+                <button className="admin_confirm" onClick={() => songDelete(id)}>Törlés</button>
+                <button className="edit-btn" onClick={onModify}>Szerkesztés</button>
             </td>
         </tr>
     )

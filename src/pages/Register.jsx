@@ -1,103 +1,83 @@
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "../css/Register.css";
+import { useState } from "react";
+import '../css/Register.css';
+import FeketeGomb from '../components/FeketeGomb';
+import { register } from '../api';
 
-function Register() {
-  const navigate = useNavigate();
+export default function Register() {
+    const navigate = useNavigate();
+    const [email, setEmail] = useState('');
+    const [psw, setPsw] = useState('');
+    const [hiba, setHiba] = useState('');
+    const [uzenet, setUzenet] = useState('');
 
-  const [email, setEmail] = useState("");
-  const [psw, setPsw] = useState("");
-  const [message, setMessage] = useState("");
-  const [isError, setIsError] = useState(false);
+    async function onReg() {
+        setHiba('');
+        setUzenet('');
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+        if (!email || !psw) {
+            return setHiba('Minden mezőt tölts ki!');
+        }
 
-    try {
-      const response = await fetch("http://localhost:4562/user/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email,
-          psw,
-        }),
-      });
-
-      const data = await response.json();
-      if (!response.ok) {
-        setIsError(true);
-        setMessage(data.message || "Hiba történt a regisztráció során");
-        return;
-      }
-      setIsError(false);
-      setMessage("Sikeres regisztráció!");
-      // Átirányítás login oldalra
-      setTimeout(() => {
-        navigate("/login");
-      }, 1500);
-
-    } catch (error) {
-      console.error("Hiba:", error);
-      setIsError(true);
-      setMessage("Szerver hiba történt");
+        try {
+            const data = await register(email, psw);
+            if (data.error) {
+                return setHiba(data.error);
+            }
+            setUzenet(data.message);
+            setTimeout(() => navigate('/login'), 800);
+        } catch (err) {
+            return setHiba("Hiba a csatlakozás során!");
+        }
     }
-  };
 
-  return (
-    <div className="tarolo">
+    return (
+        <div className="home-wrapper">
+            <div className="tarolo">
+                <h1 className="focim">
+                    OOOO<span className="focim_zold">dify</span>
+                </h1>
 
-      <h1 className="focim">
-        OOO<span className="focim_zold">udify</span>
-      </h1>
+                <div className="regText">Regisztrálj a zenehallgatás elindításához</div>
 
-      <div className="regText">Regisztrálj a zenehallgatás elindításához</div>
+                <div className="regEmail">Email cím</div>
+                <div className="input">
+                    <FeketeGomb
+                        szin="input-email"
+                        type="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        placeholder="email@domain.com"
+                    />
+                </div>
 
-      <form onSubmit={handleSubmit}>
+                <div className="regPassword">Jelszó</div>
+                <div className="input">
+                    <FeketeGomb
+                        szin="input-psw"
+                        type="password"
+                        value={psw}
+                        onChange={(e) => setPsw(e.target.value)}
+                        placeholder="•••••••••"
+                    />
+                </div>
 
-        <div className="regEmail">Email cím</div>
-        <div className="input">
-          <input
-            type="email"
-            placeholder="nev@domain.com"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
+                <div className="reg">
+                    <FeketeGomb
+                        szin="btn btn-dark px-4"
+                        text="Regisztráció"
+                        onClick={onReg}
+                    />
+                </div>
+
+                {hiba && <p className="error-message">{hiba}</p>}
+                {uzenet && <p className="success-message">{uzenet}</p>}
+
+                <div className="loginContainer">
+                    <p className="loginText">Már van fiókod?</p>
+                    <a href="/login" className="loginLink">Bejelentkezés</a>
+                </div>
+            </div>
         </div>
-
-        <div className="regPassword">Jelszó</div>
-        <div className="input">
-          <input
-            type="password"
-            value={psw}
-            onChange={(e) => setPsw(e.target.value)}
-            required
-          />
-        </div>
-
-        <div className="reg">
-          <button type="submit">Regisztráció</button>
-        </div>
-
-        {message && (
-          <p className={isError ? "formMessage error" : "formMessage success"}>
-            {message}
-          </p>
-        )}
-
-      </form>
-
-      <div className="loginContainer">
-        <p className="loginText">
-          Már van fiókod?
-        </p>
-        <a href="/login" className="loginLink">Bejelentkezés</a>
-      </div>
-
-    </div>
-  );
+    );
 }
-
-export default Register;

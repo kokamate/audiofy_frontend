@@ -1,13 +1,15 @@
-export default function UserInfo({ id, email, role, onDelete, onModify }) {
+export default function UserInfo({ id, email, role, onDelete, onEdit }) {
     return (
         <tr>
             <td>{id}</td>
             <td>{email}</td>
-            <td>{role}</td>
             <td>
-                <button onClick={() => onDelete(id)} className="delete">Törlés</button>
-                <button onClick={onModify} className="modify">Szerkesztés</button>
+                <span className={`role-badge role-${role}`}>{role}</span>
+            </td>
+            <td>
+                <button className="admin_confirm" onClick={() => onDelete(id)}>Törlés</button>
+                <button className="edit-btn" onClick={onEdit}>Szerkesztés</button>
             </td>
         </tr>
-    )
+    );
 }
