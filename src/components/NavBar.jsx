@@ -1,19 +1,33 @@
-import { Link } from "react-router-dom"
-import "../css/Home.css"
-import Card from "./Card"
+// NavBar.jsx
+import { Link } from "react-router-dom";
+import "../css/Home.css";
+import { useState, useEffect } from "react";
+import Card from "./Card";
 
 export function NavBar({ user, onLogout }) {
+    const [musics, setMusics] = useState([]);
 
-    const isLoggedIn = !!user
-    const isAdmin = user?.role === "admin"
+    // Adatok lekérése a backendből
+    useEffect(() => {
+        async function fetchMusics() {
+            try {
+                const res = await fetch("http://127.0.0.1:4562/user/musics");
+                const data = await res.json();
+                console.log(data); // ← ide
+                setMusics(data);
+            } catch (err) {
+                console.error("Hiba a zenék betöltésekor:", err);
+            }
+        }
+        fetchMusics();
+    }, []);
+
+    const isLoggedIn = !!user;
+    const isAdmin = user?.role === "admin";
 
     return (
         <div className="container-fluid px-4">
-
             {isLoggedIn ? (
-
-
-
                 <div className="asd">
                     <div className="header">
                         <div className="logo">
@@ -21,37 +35,32 @@ export function NavBar({ user, onLogout }) {
                         </div>
 
                         <div className="header-buttons">
-                            <button
-                                className="header-btn"
-                                onClick={onLogout}
-                            >
+                            <button className="header-btn" onClick={onLogout}>
                                 Kijelentkezés
                             </button>
                             {isAdmin && (
                                 <Link to="/admin" className="admin_panel">
                                     Admin panel
                                 </Link>
-
                             )}
                         </div>
-
                     </div>
 
                     <div className="fooldalresz">
                         <h2>Felkapott zenék</h2>
                         <div className="cards">
-                            <Card
-                                title='asdas'
-                                artist='asd'
-                            />
+                            {musics.map((song) => (
+                                <Card
+                                    key={song.songID}
+                                    name={song.name}
+                                    title={song.title}
+                                    image={`http://127.0.0.1:4562/${song.musicImg}`}
+                                    song= {`http://127.0.0.1:4562${song.song}`}
+                                />
+                            ))}
                         </div>
                     </div>
                 </div>
-
-
-
-
-
             ) : (
                 <div className="home-wrapper">
                     <div className="header">
@@ -61,9 +70,7 @@ export function NavBar({ user, onLogout }) {
 
                         <div className="header-buttons">
                             <Link to="/login">
-                                <button className="header-btn">
-                                    Bejelentkezés
-                                </button>
+                                <button className="header-btn">Bejelentkezés</button>
                             </Link>
                         </div>
                     </div>
@@ -85,5 +92,5 @@ export function NavBar({ user, onLogout }) {
                 </div>
             )}
         </div>
-    )
+    );
 }
