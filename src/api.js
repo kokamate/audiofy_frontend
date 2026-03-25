@@ -1,5 +1,23 @@
-const ADMIN_URL = 'http://localhost:4562/admin'
-const BACKEND_URL = "/user";
+const ADMIN_URL = 'http://localhost:4562/admin';
+const BACKEND_URL = 'http://localhost:4562/user';
+const IMAGE_URL = 'http://localhost:4562/song-images'
+
+export async function getSongImg(song_id) {
+    try {
+        const res = await fetch(`${IMAGE_URL}/${song_id}`)
+        if (!res.ok) {
+            console.error('Hiba a kép lekérésekor:', res.status)
+            return null
+        }
+        const data = await res.json()
+        console.log('Lekért kép adatok:', data)
+        return data
+    } catch (err) {
+        console.error('Hálózati hiba:', err)
+        return null
+    }
+}
+
 
 // REGISTER
 export async function register(email, psw) {

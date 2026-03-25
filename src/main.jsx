@@ -6,9 +6,11 @@ import Home from './pages/Home'
 import Register from './pages/Register'
 import Login from './pages/Login'
 import Admin from './pages/Admin'
+import { AuthProvider } from './context/AuthContext'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
+    <AuthProvider>
     <BrowserRouter>
       <Routes>
       <Route path='/' element={<Home />}/>
@@ -17,5 +19,6 @@ createRoot(document.getElementById('root')).render(
       <Route path='admin' element={<Admin />}/>
     </Routes>
     </BrowserRouter>
+    </AuthProvider>
   </StrictMode>,
 )

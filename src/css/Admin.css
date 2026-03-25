@@ -6,6 +6,12 @@
     --danger: #ff4d4d;
 }
 
+.brendon {
+    background-image: url('../assets/brendon.jfif');
+    height: 50vh;
+    background-size: cover;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -236,6 +242,10 @@ button {
     margin-bottom: 10px;
 }
 
+.admin_modal p, h2 {
+    text-align: center;
+}
+
 .admin_modal p,
 .edit-modal label {
     margin: 10px 0;
@@ -261,6 +271,20 @@ button {
     justify-content: flex-end;
     gap: 10px;
     margin-top: 15px;
+    align-items: center;
+    justify-content: center;
+}
+
+.edit-megse:hover {
+    transform: scale(1.05);
+    background-color: rgb(0, 0, 0);
+    color: white;
+}
+
+.edit-mentes:hover {
+    transform: scale(1.05);
+    background-color: green;
+    color: white;
 }
 
 button {
@@ -294,7 +318,7 @@ button {
 
 .admin_confirm:hover,
 .save-btn:hover {
-    background: #8d0606;
+    background: rgb(156, 21, 21);
     transform: scale(1.05);
 }
 
@@ -329,4 +353,80 @@ button {
     margin-top: 5px;
     background-color: #181818;
     color: white;
+}
+
+.admin_link_hehe {
+    text-decoration: none;
+    background-color: inherit;
+}
+
+@media(max-width: 48rem) { /* ~768px */
+
+    .admin-container {
+        padding: 2rem;
+        width: 95%;
+    }
+
+    table, thead, tbody, th, td, tr {
+        display: block;
+        width: 100%;
+    }
+
+    thead {
+        display: none;
+    }
+
+    tr {
+        margin-bottom: 1.5rem;
+        border-radius: 1rem;
+        overflow: hidden;
+        background: var(--card2);
+        padding: 0.5rem 0;
+    }
+
+    td {
+        position: relative;
+        padding: 0.8rem 1rem;
+        padding-left: 50%;
+        text-align: left;
+        border-bottom: none;
+        background: var(--card);
+        margin-bottom: 0.3rem;
+        border-radius: 0.6rem;
+    }
+
+    td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 1rem;
+        top: 0.8rem;
+        font-weight: bold;
+        color: var(--green);
+        text-transform: uppercase;
+        font-size: 0.8rem;
+    }
+
+    .admin_confirm,
+    .edit-btn {
+        width: 48%;
+        font-size: 0.8rem;
+        margin: 0.3rem 1%;
+    }
+
+    .admin_buttons,
+    .edit-buttons {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .admin_buttons button,
+    .edit-buttons button {
+        width: 100%;
+    }
+}
+
+@media (max-width: 48rem) { /* mobil ~768px alatt */
+    .hehehehehehe {
+        display: none;
+    }
 }

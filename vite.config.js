@@ -15,8 +15,7 @@ export default defineConfig({
       '/user': {
         target: 'http://127.0.0.1:4562',
         changeOirigin: true
-      }
+      },
     }
-
   }
 })
