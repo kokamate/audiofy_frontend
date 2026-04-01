@@ -1,49 +1,58 @@
-import { createContext, useContext, useEffect, useState } from "react"
-import { whoami, logout } from "../api"
+// context/AuthContext.jsx
+import { createContext, useContext, useEffect, useState } from "react";
+import { whoami, logout } from "../api";
 
-const AuthContext = createContext()
+const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
-    const [user, setUser] = useState(null)
-    const [errorUser, setErrorUser] = useState('')
-    const [loading, setLoading] = useState(true)
+    const [user, setUser] = useState(null); // ← átnevezve users → user
+    const [errorUser, setErrorUser] = useState('');
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         async function loadUser() {
-            //await new Promise(resolve => setTimeout(resolve, 5000))
-            const data = await whoami()
+            try {
+                const data = await whoami();
 
-            if (data.error) {
-                setErrorUser(data.error)
-                setLoading(false)
-                return
+                if (data.error) {
+                    setErrorUser(data.error);
+                    setLoading(false);
+                    return;
+                }
+
+                setUser(data);
+                setLoading(false);
+            } catch (err) {
+                setErrorUser("Hiba a felhasználó betöltésekor.");
+                setLoading(false);
             }
-
-            setUser(data)
-            setLoading(false)
         }
 
-        loadUser()
-    }, [])
+        loadUser();
+    }, []);
 
     async function onLogout() {
-        const data = await logout()
+        try {
+            const data = await logout();
 
-        if (data.error) {
-            setErrorUser(data.error)
-            return
+            if (data.error) {
+                setErrorUser(data.error);
+                return;
+            }
+
+            setUser(null);
+        } catch {
+            setErrorUser("Hiba kijelentkezéskor.");
         }
-
-        setUser(null)
     }
 
     return (
         <AuthContext.Provider value={{ user, setUser, loading, errorUser, onLogout }}>
             {children}
         </AuthContext.Provider>
-    )
+    );
 }
 
 export function useAuth() {
-    return useContext(AuthContext)
+    return useContext(AuthContext);
 }

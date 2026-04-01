@@ -16,14 +16,6 @@ export default function Admin() {
         return <Navigate to="/" />;
     }
 
-    if (user.role !== 'admin') {
-        return(
-            <div className="brendon">
-                <h1 className="brendon_h1">Nincs jogosultságod!</h1>
-            </div>
-        );
-    }
-
     const [users, setUsers] = useState([]);
     const [musics, setMusics] = useState([]);
 
@@ -50,6 +42,7 @@ export default function Admin() {
     const [newSongName, setNewSongName] = useState('');
     const [newSongTitle, setNewSongTitle] = useState('');
     const [newSongFile, setNewSongFile] = useState(null);
+    const [newSongImage, setNewSongImage] = useState(null);
 
     // --- Fetch users ---
     useEffect(() => {
@@ -193,35 +186,34 @@ export default function Admin() {
     async function uploadNewSong() {
         setSongUzenet('');
         setSongHiba('');
-
-        if (!newSongName || !newSongTitle || !newSongFile) {
+    
+        if (!newSongName || !newSongTitle || !newSongFile || !newSongImage) {
             setSongHiba("Minden mező kötelező!");
             return;
         }
-
+    
         try {
             const formData = new FormData();
-            formData.append("name", newSongName);
-            formData.append("title", newSongTitle);
-            formData.append("file", newSongFile);
-
-            // Hozzáadjuk a userID-t a backendnek
-            const userID = users.length > 0 ? users[0].userID : 1;
-            formData.append("userID", userID);
-
+            formData.append('song', newSongFile);
+            formData.append('img', newSongImage);
+            formData.append('name', newSongName);
+            formData.append('title', newSongTitle);
+            // Ha akarsz, userID-t is
+            formData.append("userID", users.length > 0 ? users[0].userID : 1);
+            
             const res = await fetch("http://127.0.0.1:4562/admin/uploadsong", {
                 method: "POST",
                 body: formData
             });
-
+    
             if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
-
+    
             const data = await res.json();
             setMusics([...musics, data]);
-
+    
             setSongUzenet("Zene feltöltve!");
             setShowNewSongModal(false);
-
+    
         } catch (err) {
             console.error(err);
             setSongHiba("Hiba feltöltés során!");
@@ -391,6 +383,12 @@ export default function Admin() {
                             type="file"
                             accept="audio/*"
                             onChange={(e) => setNewSongFile(e.target.files[0])}
+                        />
+
+                        <input
+                            type="file"
+                            accept="image/*"
+                            onChange={(e) => setNewSongImage(e.target.files[0])}
                         />
 
                         <div className="edit-buttons">
