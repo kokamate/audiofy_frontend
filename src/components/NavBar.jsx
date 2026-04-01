@@ -54,8 +54,8 @@ export function NavBar({ user, onLogout }) {
                                     key={song.songID}
                                     name={song.name}
                                     title={song.title}
-                                    image={`http://127.0.0.1:4562/${song.musicImg}`}
-                                    song= {`http://127.0.0.1:4562${song.song}`}
+                                    image={`http://127.0.0.1:4562${song.musicImg}`}
+                                    song={`http://127.0.0.1:4562${song.song}`}
                                 />
                             ))}
                         </div>
