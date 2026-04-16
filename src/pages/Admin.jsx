@@ -366,7 +366,7 @@ export default function Admin() {
 
                         <input
                             type="text"
-                            placeholder="Név"
+                            placeholder="Cím"
                             value={newSongName}
                             onChange={(e) => setNewSongName(e.target.value)}
                         />
@@ -377,14 +377,14 @@ export default function Admin() {
                             value={newSongTitle}
                             onChange={(e) => setNewSongTitle(e.target.value)}
                         />
-
+                            <h2>Zene feltöltés</h2>
                         {/* TALLÓZÁS 👇 */}
                         <input
                             type="file"
                             accept="audio/*"
                             onChange={(e) => setNewSongFile(e.target.files[0])}
                         />
-
+                            <h2>Kép feltöltés</h2>
                         <input
                             type="file"
                             accept="image/*"
