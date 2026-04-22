@@ -1,6 +1,6 @@
-const ADMIN_URL = 'http://localhost:4562/admin';
-const BACKEND_URL = 'http://localhost:4562/user';
-const IMAGE_URL = 'http://localhost:4562/song-images'
+const ADMIN_URL = 'https://nodejs307.dszcbaross.edu.hu/admin';
+const BACKEND_URL = 'https://nodejs307.dszcbaross.edu.hu/user';
+const IMAGE_URL = 'https://nodejs307.dszcbaross.edu.hu/song-images'
 
 export async function getSongImg(song_id) {
     try {

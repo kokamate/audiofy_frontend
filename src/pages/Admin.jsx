@@ -46,9 +46,8 @@ export default function Admin() {
 
     // --- Fetch users ---
     useEffect(() => {
-        fetch("http://127.0.0.1:4562/admin/users")
+        fetch("https://nodejs307.dszcbaross.edu.hu/admin/users")
             .then(res => {
-                if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
                 return res.json();
             })
             .then(data => setUsers(data))
@@ -57,13 +56,11 @@ export default function Admin() {
 
     // --- Fetch musics ---
     useEffect(() => {
-        fetch("http://127.0.0.1:4562/admin/musics")
+        fetch("https://nodejs307.dszcbaross.edu.hu/admin/musics")
             .then(res => {
-                if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
                 return res.json();
             })
             .then(data => {
-                if (!Array.isArray(data)) throw new Error("Nem tömb az adat");
                 setMusics(data);
             })
             .catch(err => {
@@ -135,7 +132,7 @@ export default function Admin() {
 
     async function saveEditUser() {
         try {
-            await fetch(`http://127.0.0.1:4562/admin/updateuser/${editUser.userID}`, {
+            await fetch(`https://nodejs307.dszcbaross.edu.hu/admin/updateuser/${editUser.userID}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email: editEmail, role: editRole })
@@ -156,7 +153,7 @@ export default function Admin() {
 
     async function saveEditSong() {
         try {
-            await fetch(`http://127.0.0.1:4562/admin/updatesong/${editSong.songID}`, {
+            await fetch(`https://nodejs307.dszcbaross.edu.hu/admin/updatesong/${editSong.songID}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ name: editName, title: editTitle })
@@ -201,7 +198,7 @@ export default function Admin() {
             // Ha akarsz, userID-t is
             formData.append("userID", users.length > 0 ? users[0].userID : 1);
             
-            const res = await fetch("http://127.0.0.1:4562/admin/uploadsong", {
+            const res = await fetch("https://nodejs307.dszcbaross.edu.hu/admin/uploadsong", {
                 method: "POST",
                 body: formData
             });

@@ -13,7 +13,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/user': {
-        target: 'http://127.0.0.1:4562',
+        target: 'https://nodejs307.dszcbaross.edu.hu',
         changeOirigin: true
       },
     }

@@ -24,7 +24,7 @@ export function NavBar({ user, onLogout }) {
 
     const fetchMusics = async () => {
         try {
-            const res = await fetch("http://127.0.0.1:4562/user/musics");
+            const res = await fetch("https://nodejs307.dszcbaross.edu.hu/user/musics");
             const data = await res.json();
             setMusics(data || []);
         } catch (err) {
@@ -208,8 +208,8 @@ export function NavBar({ user, onLogout }) {
                                         songObj={song}
                                         name={song.name}
                                         title={song.title}
-                                        image={`http://127.0.0.1:4562${song.musicImg}`}
-                                        song={`http://127.0.0.1:4562${song.song}`}
+                                        image={`https://nodejs307.dszcbaross.edu.hu${song.musicImg}`}
+                                        song={`https://nodejs307.dszcbaross.edu.hu${song.song}`}
                                         isInPlaylist={isInPlaylist(song.songID)}
                                         onTogglePlaylist={handlePlaylistToggle}
                                     />

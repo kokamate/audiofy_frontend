@@ -10,7 +10,7 @@ export default function Logged() {
     e.preventDefault();
 
     try {
-      const response = await fetch('http://localhost:4562/user/logout', {
+      const response = await fetch('https://nodejs307.dszcbaross.edu.hu/user/logout', {
         method: 'POST',
         credentials: 'include'
       });

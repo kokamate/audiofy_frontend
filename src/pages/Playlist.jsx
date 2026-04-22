@@ -84,8 +84,8 @@ export default function Playlist() {
                                     songObj={song}
                                     name={song.name}
                                     title={song.title}
-                                    image={`http://127.0.0.1:4562${song.musicImg}`}
-                                    song={`http://127.0.0.1:4562${song.song}`}
+                                    image={`https://nodejs307.dszcbaross.edu.hu${song.musicImg}`}
+                                    song={`https://nodejs307.dszcbaross.edu.hu${song.song}`}
                                     isInPlaylist={true}
                                     onTogglePlaylist={handleRemove}
                                 />
