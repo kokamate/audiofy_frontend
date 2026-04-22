@@ -1,6 +1,6 @@
-const ADMIN_URL = 'http://localhost:4562/admin';
-const BACKEND_URL = 'http://localhost:4562/user';
-const IMAGE_URL = 'http://localhost:4562/song-images'
+const ADMIN_URL = 'https://nodejs307.dszcbaross.edu.hu/admin';
+const BACKEND_URL = 'https://nodejs307.dszcbaross.edu.hu/user';
+const IMAGE_URL = 'https://nodejs307.dszcbaross.edu.hu/song-images'
 
 export async function getSongImg(song_id) {
     try {
@@ -92,5 +92,121 @@ export async function deletesongs(songID) {
     const res = await fetch(`${ADMIN_URL}/deletesongs/${songID}`, {
         method: 'DELETE'
     })
+}
+
+export async function getLikedSongs() {
+    const res = await fetch(`${BACKEND_URL}/liked-songs`, {
+        method: "GET",
+        credentials: "include",
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+        return { error: data?.error };
+    }
+
+    return data;
+}
+
+export async function toggleLikeSong(songID) {
+    console.log("Toggling like for songID:", songID);
+    const res = await fetch(`${BACKEND_URL}/like/${songID}`, {
+        method: "POST",
+        credentials: "include",
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+        console.error("Like toggle error:", data?.error);
+        return { error: data?.error };
+    }
+
+    console.log("Like toggle response:", data);
+    return data;
+}
+
+export async function getPlaylists() {
+    const res = await fetch(`${BACKEND_URL}/playlists`, {
+        method: "GET",
+        credentials: "include",
+    });
+
+    const data = await res.json();
+    if (!res.ok) {
+        return { error: data?.error };
+    }
+
+    return data;
+}
+
+export async function createPlaylist(name) {
+    const res = await fetch(`${BACKEND_URL}/playlists`, {
+        method: "POST",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name }),
+    });
+
+    const data = await res.json();
+    if (!res.ok) {
+        return { error: data?.error };
+    }
+
+    return data;
+}
+
+export async function getPlaylistSongs(playlistID) {
+    const res = await fetch(`${BACKEND_URL}/playlists/${playlistID}`, {
+        method: "GET",
+        credentials: "include",
+    });
+
+    const data = await res.json();
+    if (!res.ok) {
+        return { error: data?.error };
+    }
+
+    return data;
+}
+
+export async function getPlaylist() {
+    const playlists = await getPlaylists();
+    if (playlists?.error) {
+        return playlists;
+    }
+    if (!Array.isArray(playlists) || playlists.length === 0) {
+        return [];
+    }
+    return await getPlaylistSongs(playlists[0].playlistID);
+}
+
+export async function addSongToPlaylist(playlistID, songID) {
+    const res = await fetch(`${BACKEND_URL}/playlists/${playlistID}/songs/${songID}`, {
+        method: "POST",
+        credentials: "include",
+    });
+
+    const data = await res.json();
+    if (!res.ok) {
+        return { error: data?.error };
+    }
+
+    return data;
+}
+
+export async function removeSongFromPlaylist(playlistID, songID) {
+    const res = await fetch(`${BACKEND_URL}/playlists/${playlistID}/songs/${songID}`, {
+        method: "DELETE",
+        credentials: "include",
+    });
+
+    const data = await res.json();
+    if (!res.ok) {
+        return { error: data?.error };
+    }
+
+    return data;
 }
 
