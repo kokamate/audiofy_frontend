@@ -7,11 +7,9 @@ import Home from './pages/Home';
 import Register from './pages/Register';
 import Login from './pages/Login';
 import Admin from './pages/Admin';
-import Playlist from './pages/Playlist';
-import Liked from './pages/Liked';
+import Liked from './pages/Like'
 import { AuthProvider } from './context/AuthContext';
 import { AdminRoute } from './context/AdminRoute';
-import { AuthRoute } from './context/AuthRoute';
 import { MusicProvider } from './context/MusicContext';
 
 createRoot(document.getElementById('root')).render(
@@ -23,12 +21,7 @@ createRoot(document.getElementById('root')).render(
             <Route path='/' element={<Home />} />
             <Route path='register' element={<Register />} />
             <Route path='login' element={<Login />} />
-            <Route path='playlist' element={<Playlist />} />
-            <Route path='liked' element={
-              <AuthRoute>
-                <Liked />
-              </AuthRoute>
-            } />
+            <Route path='like' element={<Liked />} />
             <Route
               path='admin'
               element={

@@ -1,33 +1,25 @@
 import React, { useRef, useState, useEffect } from "react";
 import "../css/Home.css";
 import { useMusic } from "../context/MusicContext";
-import { useNavigate } from "react-router-dom";
 
-export default function Card({ name, title, image, song, songObj, isInPlaylist = false, onTogglePlaylist }) {
+export default function Card({ name, title, image, song, songObj }) {
     const audioRef = useRef(null);
     const [isPlaying, setIsPlaying] = useState(false);
     const [progress, setProgress] = useState(0);
     const [duration, setDuration] = useState(0);
     const [volume, setVolume] = useState(0.7);
-    const navigate = useNavigate();
 
-    const { playSong, likedSongs, toggleLike, registerAudioRef, unregisterAudioRef, playlistModeActive } = useMusic();
+    const { playSong, likedSongs, toggleLike } = useMusic();
 
     if (!songObj) {
         console.error("Card: songObj prop is missing!");
         return <div>Hiba: Nincs zene adat</div>;
     }
 
-    const songID = String(songObj.songID);
-    const isLiked = likedSongs.includes(songID);
-    const disabledPlay = playlistModeActive && !isInPlaylist;
-
-    const handleLike = async () => {
-        await toggleLike(songID);
-    };
+    const isLiked = likedSongs.includes(String(songObj.songID));
 
     const togglePlay = () => {
-        if (!audioRef.current || disabledPlay) return;
+        if (!audioRef.current) return;
 
         if (isPlaying) {
             audioRef.current.pause();
@@ -64,17 +56,6 @@ export default function Card({ name, title, image, song, songObj, isInPlaylist =
     };
 
     useEffect(() => {
-        const audio = audioRef.current;
-        if (audio) {
-            registerAudioRef(songID, audio);
-        }
-
-        return () => {
-            unregisterAudioRef(songID);
-        };
-    }, [songID, registerAudioRef, unregisterAudioRef]);
-
-    useEffect(() => {
         if (!audioRef.current) return;
 
         const audio = audioRef.current;
@@ -104,29 +85,11 @@ export default function Card({ name, title, image, song, songObj, isInPlaylist =
         <div className="card">
             <div className="cover">
                 <img src={image} alt={title} />
-                <button
-                    onClick={togglePlay}
-                    className={`play${disabledPlay ? ' disabled-play' : ''}`}
-                    disabled={disabledPlay}
-                    title={disabledPlay ? 'Csak a kiválasztott playlist dalai játszhatók.' : 'Lejátszás'}
-                >
+                <button onClick={togglePlay} className="play">
                     {isPlaying ? "❚❚" : "▶"}
                 </button>
-                {onTogglePlaylist && (
-                    <button
-                        type="button"
-                        className={`playlist-btn ${isInPlaylist ? 'in-playlist' : ''}`}
-                        onClick={(e) => {
-                            e.stopPropagation();
-                            onTogglePlaylist(songID);
-                        }}
-                        title={isInPlaylist ? 'Eltávolítás a lejátszási listából' : 'Hozzáadás a lejátszási listához'}
-                    >
-                        {isInPlaylist ? '✓' : '+'}
-                    </button>
-                )}
-                <button onClick={handleLike} className={`like-btn ${isLiked ? 'liked' : ''}`}>
-                    {isLiked ? '❤️' : '🤍'}
+                <button onClick={() => toggleLike(String(songObj.songID))} className={`like-btn ${isLiked ? 'liked' : ''}`}>
+                    {isLiked ? '❤️' : '♡'}
                 </button>
             </div>
 
