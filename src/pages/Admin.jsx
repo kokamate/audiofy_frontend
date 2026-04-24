@@ -46,7 +46,7 @@ export default function Admin() {
 
     // --- Fetch users ---
     useEffect(() => {
-        fetch("http://127.0.0.1:4562/admin/users")
+        fetch("/admin/users")
             .then(res => {
                 if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
                 return res.json();
@@ -57,7 +57,7 @@ export default function Admin() {
 
     // --- Fetch musics ---
     useEffect(() => {
-        fetch("http://127.0.0.1:4562/admin/musics")
+        fetch("/admin/musics")
             .then(res => {
                 if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
                 return res.json();
@@ -135,7 +135,7 @@ export default function Admin() {
 
     async function saveEditUser() {
         try {
-            await fetch(`http://127.0.0.1:4562/admin/updateuser/${editUser.userID}`, {
+            await fetch(`/admin/updateuser/${editUser.userID}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email: editEmail, role: editRole })
@@ -156,7 +156,7 @@ export default function Admin() {
 
     async function saveEditSong() {
         try {
-            await fetch(`http://127.0.0.1:4562/admin/updatesong/${editSong.songID}`, {
+            await fetch(`/admin/updatesong/${editSong.songID}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ name: editName, title: editTitle })
@@ -201,7 +201,7 @@ export default function Admin() {
             // Ha akarsz, userID-t is
             formData.append("userID", users.length > 0 ? users[0].userID : 1);
             
-            const res = await fetch("http://127.0.0.1:4562/admin/uploadsong", {
+            const res = await fetch("/admin/uploadsong", {
                 method: "POST",
                 body: formData
             });
@@ -366,7 +366,7 @@ export default function Admin() {
 
                         <input
                             type="text"
-                            placeholder="Név"
+                            placeholder="Cím"
                             value={newSongName}
                             onChange={(e) => setNewSongName(e.target.value)}
                         />
@@ -377,14 +377,14 @@ export default function Admin() {
                             value={newSongTitle}
                             onChange={(e) => setNewSongTitle(e.target.value)}
                         />
-
+                            <h2>Zene feltöltés</h2>
                         {/* TALLÓZÁS 👇 */}
                         <input
                             type="file"
                             accept="audio/*"
                             onChange={(e) => setNewSongFile(e.target.files[0])}
                         />
-
+                            <h2>Kép feltöltés</h2>
                         <input
                             type="file"
                             accept="image/*"
