@@ -10,10 +10,10 @@ export async function getSongImg(song_id) {
             return null
         }
         const data = await res.json()
-        console.log('Lekért kép adatok:', data)
+        //console.log('Lekért kép adatok:', data)
         return data
     } catch (err) {
-        console.error('Hálózati hiba:', err)
+        //console.error('Hálózati hiba:', err)
         return null
     }
 }
@@ -88,9 +88,42 @@ export async function deleteuser(userID) {
 }
 
 export async function deletesongs(songID) {
-    console.log(songID);
+    //console.log(songID);
     const res = await fetch(`${ADMIN_URL}/deletesongs/${songID}`, {
         method: 'DELETE'
     })
+}
+
+export async function getLikedSongs() {
+    const res = await fetch(`${BACKEND_URL}/liked-songs`, {
+        method: "GET",
+        credentials: "include",
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+        return { error: data?.error };
+    }
+
+    return data;
+}
+
+export async function toggleLikeSong(songID) {
+    //console.log("Toggling like for songID:", songID);
+    const res = await fetch(`${BACKEND_URL}/like/${songID}`, {
+        method: "POST",
+        credentials: "include",
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+        console.error("Like toggle error:", data?.error);
+        return { error: data?.error };
+    }
+
+    //console.log("Like toggle response:", data);
+    return data;
 }
 

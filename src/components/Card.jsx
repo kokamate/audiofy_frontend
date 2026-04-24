@@ -1,12 +1,22 @@
 import React, { useRef, useState, useEffect } from "react";
 import "../css/Home.css";
+import { useMusic } from "../context/MusicContext";
 
-export default function Card({ name, title, image, song }) {
+export default function Card({ name, title, image, song, songObj }) {
     const audioRef = useRef(null);
     const [isPlaying, setIsPlaying] = useState(false);
     const [progress, setProgress] = useState(0);
     const [duration, setDuration] = useState(0);
     const [volume, setVolume] = useState(0.7);
+
+    const { playSong, likedSongs, toggleLike } = useMusic();
+
+    if (!songObj) {
+        console.error("Card: songObj prop is missing!");
+        return <div>Hiba: Nincs zene adat</div>;
+    }
+
+    const isLiked = likedSongs.includes(String(songObj.songID));
 
     const togglePlay = () => {
         if (!audioRef.current) return;
@@ -14,9 +24,8 @@ export default function Card({ name, title, image, song }) {
         if (isPlaying) {
             audioRef.current.pause();
         } else {
-            audioRef.current.play();
+            playSong(audioRef.current);
         }
-        setIsPlaying(!isPlaying);
     };
 
     const handleVolumeChange = (e) => {
@@ -54,15 +63,21 @@ export default function Card({ name, title, image, song }) {
         const updateProgress = () => setProgress(audio.currentTime);
         const setAudioDuration = () => setDuration(audio.duration || 0);
         const handleEnded = () => setIsPlaying(false);
+        const handlePlay = () => setIsPlaying(true);
+        const handlePause = () => setIsPlaying(false);
 
         audio.addEventListener("timeupdate", updateProgress);
         audio.addEventListener("loadedmetadata", setAudioDuration);
         audio.addEventListener("ended", handleEnded);
+        audio.addEventListener("play", handlePlay);
+        audio.addEventListener("pause", handlePause);
 
         return () => {
             audio.removeEventListener("timeupdate", updateProgress);
             audio.removeEventListener("loadedmetadata", setAudioDuration);
             audio.removeEventListener("ended", handleEnded);
+            audio.removeEventListener("play", handlePlay);
+            audio.removeEventListener("pause", handlePause);
         };
     }, []);
 
@@ -72,6 +87,9 @@ export default function Card({ name, title, image, song }) {
                 <img src={image} alt={title} />
                 <button onClick={togglePlay} className="play">
                     {isPlaying ? "❚❚" : "▶"}
+                </button>
+                <button onClick={() => toggleLike(String(songObj.songID))} className={`like-btn ${isLiked ? 'liked' : ''}`}>
+                    {isLiked ? '❤️' : '♡'}
                 </button>
             </div>
 
