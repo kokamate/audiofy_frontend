@@ -21,7 +21,7 @@
   force = true
 
 [[redirects]]
-  from = "/song"
+  from = "/song/*"
   to = "https://nodejs307.dszcbaross.edu.hu/song/:splat"
   status = 200
   force = true
