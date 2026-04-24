@@ -11,5 +11,5 @@ export function AdminRoute({ children }) {
 
     if (user.role !== "admin") return <div>Nincs jogosultságod!</div>; // nem admin
 
-    return children; // admin engedélyezve
+    return children; // admin engedélyezve megy
 }
